@@ -33,8 +33,8 @@ public class KeyManager {
         
         System.out.println("Public key is saved in database and the Private key is emailed to user.");
         // The public-private key is saved to KeyPair folder: <keyType>_<userEmail>
-        writeToFile("KeyPair/publicKey_" + userEmail, publicKey);
-        writeToFile("KeyPair/privateKey_" + userEmail, privateKey);
+        writeToFile("KeyPair/publicKey_" + userEmail + ".txt", publicKey);
+        writeToFile("KeyPair/privateKey_" + userEmail  + ".txt", privateKey);
         
         //Send an email to user with private key to the user email
         emailManager = new EmailManager();
@@ -54,8 +54,8 @@ public class KeyManager {
 		
 		System.out.println("Public key is saved in database and the Private key is emailed to user.");
 		// The public-private key is saved to KeyPair folder: <keyType>_<userEmail>
-		writeToFile("KeyPair/publicKey_" + userEmail, publicKey);
-		writeToFile("KeyPair/privateKey_" + userEmail, privateKey);
+		writeToFile("KeyPair/publicKey_" + userEmail + ".txt", publicKey);
+		writeToFile("KeyPair/privateKey_" + userEmail + ".txt", privateKey);
 			
 		// Send an email to user with private key to the user email
 		emailManager = new EmailManager();
@@ -71,14 +71,14 @@ public class KeyManager {
         byte [] key = new byte [16];
         rnd.nextBytes(key);
         SecretKeySpec secretKey = new SecretKeySpec(key, "AES");
-        writeToFile("SecretKey/symKey_"+ userEmail, secretKey.getEncoded());
+        writeToFile("SecretKey/symKey_"+ userEmail + ".txt", secretKey.getEncoded());
     }
 	
 	/*
 	 * Obtain the private key from the file uploaded by the user.
 	 */
 	public PrivateKey getPrivate(String userEmail) throws Exception {
-        byte[] keyBytes = Files.readAllBytes(new File("KeyPair/privateKey_" + userEmail).toPath());
+        byte[] keyBytes = Files.readAllBytes(new File("KeyPair/privateKey_" + userEmail + ".txt").toPath());
         PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         return keyFactory.generatePrivate(spec);
@@ -88,7 +88,7 @@ public class KeyManager {
 	 * Obtain the public key associated with the email of the user.
 	 */
     public PublicKey getPublic(String userEmail) throws Exception {
-        byte[] keyBytes = Files.readAllBytes(new File("KeyPair/publicKey_" + userEmail).toPath());
+        byte[] keyBytes = Files.readAllBytes(new File("KeyPair/publicKey_" + userEmail + ".txt").toPath());
         X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         return keyFactory.generatePublic(spec);
@@ -98,7 +98,7 @@ public class KeyManager {
 	 * Obtain the session key associated with the email of the user.
 	 */
     public SecretKeySpec getSecretKey(String userEmail) throws IOException{
-        byte[] keyBytes = Files.readAllBytes(new File("SecretKey/symKey_"+ userEmail).toPath());
+        byte[] keyBytes = Files.readAllBytes(new File("SecretKey/symKey_"+ userEmail + ".txt").toPath());
         return new SecretKeySpec(keyBytes, "AES");
     }
 	

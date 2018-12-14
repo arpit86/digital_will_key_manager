@@ -51,7 +51,7 @@ public class EmailManager {
 		Session session = getSession();
 
 		// Save the encoded Private key to a file in format <User_email>_priv.txt
-		File file = new File("KeyPair/privateKey_" + email);
+		File file = new File("KeyPair/privateKey_" + email + ".txt");
 		try {
 			// compose the message
 			MimeMessage message = new MimeMessage(session);
@@ -91,7 +91,7 @@ public class EmailManager {
 		Session session = getSession();
 
 		// Save the encoded Private key to a file in format <User_email>_priv.txt
-		File file = new File("KeyPair/privateKey_" + userEmail);
+		File file = new File("KeyPair/privateKey_" + userEmail  + ".txt");
 
 		// compose the message
 		try {
